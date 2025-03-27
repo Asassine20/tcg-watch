@@ -1,10 +1,6 @@
 <script lang="ts">
   import Icon from "@iconify/svelte" // Import Icon component
-  import {
-    WebsiteName,
-    WebsiteBaseUrl,
-    WebsiteDescription,
-  } from "../../config"
+  import { WebsiteName, WebsiteBaseUrl, WebsiteDescription } from "../../config"
 
   const ldJson = {
     "@context": "https://schema.org",
