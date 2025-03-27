@@ -187,11 +187,12 @@
                 </div>
               </div>
               <div class="flex justify-center">
-                <img
+                <!-- <img
                   alt="Screenshot of the TCG market tracker"
                   class="aspect-2044/1242"
                   src="/images/example-dashboard.png"
                 />
+                -->
               </div>
             </div>
           </a>
@@ -199,11 +200,14 @@
         <div class="md:hidden">
           <a href="https://yourtool.com/demo" target="_blank" class="link">
             <div class="card shadow-xl border overflow-hidden">
+               <!--
               <img
                 alt="Screenshot of the TCG market tracker"
                 class="aspect-2044/1242"
                 src="/images/example-dashboard.png"
               />
+            -->
+
             </div></a
           >
         </div>
