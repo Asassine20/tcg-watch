@@ -129,7 +129,7 @@
       <div class="mt-4 text-xl font-bold">
         Track price spikes, dips, and trends with  
         <span
-          class="underline decoration-secondary decoration-[3px] md:decoration-[4px]"
+          class="decoration-secondary decoration-[3px] md:decoration-[4px]"
         >
           real-time insights and alerts.
         </span>
@@ -216,7 +216,7 @@
             <div class="px-4 text-lg md:text-xl">
               <a href="https://yourtool.com/demo" class="" target="_blank"
                 >This tool helps TCG investors and collectors stay ahead by  
-                <span class="underline decoration-secondary decoration-[3px]">
+                <span class="decoration-secondary decoration-[3px]">
                   tracking price spikes and dips in real time.</span
                 ></a
               >
