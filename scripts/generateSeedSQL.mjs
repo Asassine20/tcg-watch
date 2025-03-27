@@ -17,12 +17,6 @@ try {
 
   sqlContent += "BEGIN;\n\n"
 
-  // Add category table if needed
-  sqlContent += `-- Ensure the Pokemon TCG category exists
-INSERT INTO categories (id, name) 
-VALUES (3, 'Pokemon') 
-ON CONFLICT (id) DO NOTHING;\n\n`
-
   // Process each group in the JSON
   console.log(`Processing ${jsonData.length} card groups...`)
   const currentDate = new Date().toISOString().split("T")[0]
@@ -30,13 +24,6 @@ ON CONFLICT (id) DO NOTHING;\n\n`
   let totalProducts = 0
 
   jsonData.forEach((group) => {
-    // Insert card group
-    sqlContent += `-- Card Group: ${group.name}\n`
-    sqlContent += `INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)\n`
-    sqlContent += `VALUES (${group.groupId}, '${group.name.replace(/'/g, "''")}', '${group.abbreviation || ""}', `
-    sqlContent += `${group.isSupplemental}, '${group.publishedOn.split("T")[0]}', ${group.categoryId})\n`
-    sqlContent += `ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;\n\n`
-
     // Count product types
     if (group.products && group.products.length > 0) {
       const subtypeCounts = {}

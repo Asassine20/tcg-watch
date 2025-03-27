@@ -1,16 +1,6 @@
--- Auto-generated from sv-prices-2025-03-26.json on 2025-03-27T18:28:21.167Z
+-- Auto-generated from sv-prices-2025-03-26.json on 2025-03-27T18:31:41.805Z
 
 BEGIN;
-
--- Ensure the Pokemon TCG category exists
-INSERT INTO categories (id, name) 
-VALUES (3, 'Pokemon') 
-ON CONFLICT (id) DO NOTHING;
-
--- Card Group: SV: Destined Rivals
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (24269, 'SV: Destined Rivals', '', false, '2025-05-30', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
 
 -- Products for SV: Destined Rivals: 3 total
 -- Normal: 3
@@ -97,11 +87,6 @@ INSERT INTO price_history (
     'Normal',
     '2025-03-27'
   );
-
--- Card Group: SV09: Journey Together
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (24073, 'SV09: Journey Together', '', false, '2025-03-28', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
 
 -- Products for SV09: Journey Together: 347 total
 -- Normal: 140
@@ -9478,11 +9463,6 @@ INSERT INTO price_history (
     'Normal',
     '2025-03-27'
   );
-
--- Card Group: SV: Prismatic Evolutions
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23821, 'SV: Prismatic Evolutions', 'PRE', false, '2025-01-17', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
 
 -- Products for SV: Prismatic Evolutions: 485 total
 -- Normal: 117
@@ -22586,11 +22566,6 @@ INSERT INTO price_history (
     '2025-03-27'
   );
 
--- Card Group: SV08: Surging Sparks
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23651, 'SV08: Surging Sparks', 'SV08', false, '2024-11-08', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
-
 -- Products for SV08: Surging Sparks: 450 total
 -- Normal: 182
 -- Reverse Holofoil: 165
@@ -34748,11 +34723,6 @@ INSERT INTO price_history (
     '2025-03-27'
   );
 
--- Card Group: SV07: Stellar Crown
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23537, 'SV07: Stellar Crown', 'SV07', false, '2024-09-13', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
-
 -- Products for SV07: Stellar Crown: 357 total
 -- Normal: 151
 -- Holofoil: 81
@@ -44399,11 +44369,6 @@ INSERT INTO price_history (
     '2025-03-27'
   );
 
--- Card Group: SV: Shrouded Fable
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23529, 'SV: Shrouded Fable', 'SFA', false, '2024-08-02', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
-
 -- Products for SV: Shrouded Fable: 188 total
 -- Normal: 74
 -- Reverse Holofoil: 63
@@ -49486,11 +49451,6 @@ INSERT INTO price_history (
     'Normal',
     '2025-03-27'
   );
-
--- Card Group: SV06: Twilight Masquerade
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23473, 'SV06: Twilight Masquerade', 'TWM', false, '2024-05-24', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
 
 -- Products for SV06: Twilight Masquerade: 405 total
 -- Normal: 163
@@ -60434,11 +60394,6 @@ INSERT INTO price_history (
     '2025-03-27'
   );
 
--- Card Group: SV05: Temporal Forces
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23381, 'SV05: Temporal Forces', 'TEF', false, '2024-03-22', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
-
 -- Products for SV05: Temporal Forces: 393 total
 -- Normal: 161
 -- Reverse Holofoil: 140
@@ -71057,11 +71012,6 @@ INSERT INTO price_history (
     '2025-03-27'
   );
 
--- Card Group: SV: Paldean Fates
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23353, 'SV: Paldean Fates', 'PAF', false, '2024-01-26', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
-
 -- Products for SV: Paldean Fates: 369 total
 -- Normal: 108
 -- Reverse Holofoil: 81
@@ -81031,11 +80981,6 @@ INSERT INTO price_history (
     'Normal',
     '2025-03-27'
   );
-
--- Card Group: SV04: Paradox Rift
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23286, 'SV04: Paradox Rift', 'PAR', false, '2023-11-03', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
 
 -- Products for SV04: Paradox Rift: 461 total
 -- Normal: 168
@@ -93491,11 +93436,6 @@ INSERT INTO price_history (
     '2025-03-27'
   );
 
--- Card Group: SV: Scarlet & Violet 151
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23237, 'SV: Scarlet & Violet 151', 'MEW', false, '2023-09-22', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
-
 -- Products for SV: Scarlet & Violet 151: 398 total
 -- Normal: 166
 -- Reverse Holofoil: 153
@@ -104248,11 +104188,6 @@ INSERT INTO price_history (
     'Normal',
     '2025-03-27'
   );
-
--- Card Group: SV03: Obsidian Flames
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23228, 'SV03: Obsidian Flames', 'OBF', false, '2023-08-11', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
 
 -- Products for SV03: Obsidian Flames: 436 total
 -- Normal: 196
@@ -116032,11 +115967,6 @@ INSERT INTO price_history (
     'Normal',
     '2025-03-27'
   );
-
--- Card Group: SV02: Paldea Evolved
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (23120, 'SV02: Paldea Evolved', 'PAL', false, '2023-06-09', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
 
 -- Products for SV02: Paldea Evolved: 487 total
 -- Normal: 183
@@ -129194,11 +129124,6 @@ INSERT INTO price_history (
     '2025-03-27'
   );
 
--- Card Group: SV: Scarlet & Violet Promo Cards
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (22872, 'SV: Scarlet & Violet Promo Cards', 'SVP', false, '2023-03-31', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
-
 -- Products for SV: Scarlet & Violet Promo Cards: 242 total
 -- Holofoil: 222
 -- Normal: 15
@@ -135739,11 +135664,6 @@ INSERT INTO price_history (
     'Holofoil',
     '2025-03-27'
   );
-
--- Card Group: SV01: Scarlet & Violet Base Set
-INSERT INTO card_groups (id, name, abbreviation, is_supplemental, published_on, category_id)
-VALUES (22873, 'SV01: Scarlet & Violet Base Set', 'SV1', false, '2023-03-31', 3)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
 
 -- Products for SV01: Scarlet & Violet Base Set: 502 total
 -- Reverse Holofoil: 186
