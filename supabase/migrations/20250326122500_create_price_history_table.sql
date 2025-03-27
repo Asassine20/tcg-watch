@@ -23,15 +23,12 @@ CREATE TABLE IF NOT EXISTS price_history (
   UNIQUE(product_id, sub_type_name)
 );
 
--- Create a function to populate price data from JSON
+-- Create a function to populate price data directly from JSON
 CREATE OR REPLACE FUNCTION populate_price_history() RETURNS void AS $$
 DECLARE
   json_data JSON;
   group_data JSON;
   product_data JSON;
-  price_data JSON;
-  price_result JSON;
-  price_record JSON;
   current_date DATE := '2025-03-26'::DATE;
 BEGIN
   -- Read the JSON data from the file
@@ -40,25 +37,25 @@ BEGIN
   -- Loop through each group in the array
   FOR group_data IN SELECT * FROM json_array_elements(json_data)
   LOOP
-    -- Get the prices file path based on category_id and group_id
     DECLARE
       category_id INTEGER := (group_data->>'categoryId')::INTEGER;
       group_id INTEGER := (group_data->>'groupId')::INTEGER;
       set_name TEXT := group_data->>'name';
       abbreviation TEXT := group_data->>'abbreviation';
-      price_file_path TEXT := '/Users/ebsan/workspace/tcg-watch/price-history/2025-03-26/' || category_id || '/' || group_id || '/prices';
+      products_array JSON := group_data->'products';
     BEGIN
-      -- Check if the price file exists
-      IF (SELECT EXISTS (SELECT 1 FROM pg_stat_file(price_file_path))) THEN
-        -- Read the price data from the file
-        price_data := pg_read_file(price_file_path)::JSON;
-        
-        -- Extract the results array
-        price_result := price_data->'results';
-        
-        -- Loop through each record in the price results array
-        FOR price_record IN SELECT * FROM json_array_elements(price_result)
-        LOOP
+      -- Loop through each product in the group's products array
+      FOR product_data IN SELECT * FROM json_array_elements(products_array)
+      LOOP        
+        DECLARE
+          product_id INTEGER := (product_data->>'productId')::INTEGER;
+          prev_low_price DECIMAL := (product_data->>'lowPrice')::DECIMAL;
+          prev_mid_price DECIMAL := (product_data->>'midPrice')::DECIMAL;
+          prev_high_price DECIMAL := (product_data->>'highPrice')::DECIMAL;
+          prev_market_price DECIMAL := (product_data->>'marketPrice')::DECIMAL;
+          prev_direct_low_price DECIMAL := (product_data->>'directLowPrice')::DECIMAL;
+          sub_type_name TEXT := product_data->>'subTypeName';
+        BEGIN
           -- Insert data into the price_history table
           INSERT INTO price_history (
             category_id,
@@ -66,6 +63,13 @@ BEGIN
             set_name,
             abbreviation,
             product_id,
+            -- Since we'll populate this with API calls,
+            -- we're using NULL for the current prices
+            low_price,
+            mid_price,
+            high_price,
+            market_price,
+            direct_low_price,
             prev_low_price,
             prev_mid_price,
             prev_high_price,
@@ -78,18 +82,23 @@ BEGIN
             group_id,
             set_name,
             abbreviation,
-            (price_record->>'productId')::INTEGER,
-            (price_record->>'lowPrice')::DECIMAL,
-            (price_record->>'midPrice')::DECIMAL,
-            (price_record->>'highPrice')::DECIMAL,
-            (price_record->>'marketPrice')::DECIMAL,
-            (CASE WHEN price_record->>'directLowPrice' = 'null' THEN NULL ELSE (price_record->>'directLowPrice')::DECIMAL END),
-            price_record->>'subTypeName',
+            product_id,
+            NULL, -- low_price
+            NULL, -- mid_price
+            NULL, -- high_price
+            NULL, -- market_price
+            NULL, -- direct_low_price
+            prev_low_price,
+            prev_mid_price,
+            prev_high_price,
+            prev_market_price,
+            prev_direct_low_price,
+            sub_type_name,
             current_date
           )
           ON CONFLICT (product_id, sub_type_name) DO NOTHING;
-        END LOOP;
-      END IF;
+        END;
+      END LOOP;
     END;
   END LOOP;
 
