@@ -17,14 +17,12 @@ try {
 
   sqlContent += "BEGIN;\n\n"
 
-  // Process each group in the JSON
   console.log(`Processing ${jsonData.length} card groups...`)
   const currentDate = new Date().toISOString().split("T")[0]
 
   let totalProducts = 0
 
   jsonData.forEach((group) => {
-    // Count product types
     if (group.products && group.products.length > 0) {
       const subtypeCounts = {}
       group.products.forEach((product) => {
@@ -32,22 +30,15 @@ try {
         subtypeCounts[type] = (subtypeCounts[type] || 0) + 1
       })
 
-      // Insert products summary comment
       sqlContent += `-- Products for ${group.name}: ${group.products.length} total\n`
       Object.entries(subtypeCounts).forEach(([type, count]) => {
         sqlContent += `-- ${type}: ${count}\n`
       })
       sqlContent += "\n"
 
-      // Generate price history records for each product
       sqlContent += `-- Price history entries for ${group.name}\n`
 
       group.products.forEach((product, index) => {
-        // Only process a subset of products to keep the seed file manageable
-        // if (index < 10) {
-        // Limit to first 10 products per group to avoid massive seed file
-
-        // Generate price history for this product
         sqlContent += generatePriceHistoryRecord(
           group.categoryId,
           group.groupId,
@@ -77,7 +68,6 @@ try {
   console.error("Error processing JSON:", error)
 }
 
-// Helper function to generate price history record for a product
 function generatePriceHistoryRecord(
   categoryId,
   groupId,
@@ -86,7 +76,7 @@ function generatePriceHistoryRecord(
   product,
   currentDate,
 ) {
-  const productId = product.productId // Generate a random product ID
+  const productId = product.productId
   const subTypeName = product.subTypeName
   const prevLowPrice = product.lowPrice
   const prevMidPrice = product.midPrice
