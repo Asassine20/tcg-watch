@@ -22,7 +22,7 @@ export async function GET(event: RequestEvent) {
       .from("price_history")
       .select("*")
       .order("prev_date", { ascending: false })
-      .limit(10)
+      .limit(1)
 
     if (error) {
       console.error("Error fetching recent prices:", error)
