@@ -159,58 +159,76 @@ npm run dev -- --open
 
 **Note:** some features won't work until you complete the rest of the setup steps below!
 
-### Local Supabase 
+### Local Supabase
 
 1. Install Supabase CLI
-### Local Supabase 
+
+### Local Supabase
 
 1. Install Supabase CLI
-  ```bash
-  # Using npm
-  npm install -g supabase
-  
-  # Or using Homebrew on macOS
-  brew install supabase/tap/supabase
-  ```
+
+```bash
+# Using npm
+npm install -g supabase
+
+# Or using Homebrew on macOS
+brew install supabase/tap/supabase
+```
 
 2. Install Docker
-  - Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop) for your operating system
-  - Start Docker Desktop and ensure it's running
+
+- Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop) for your operating system
+- Start Docker Desktop and ensure it's running
 
 3. Initialize Supabase locally
-  ```bash
-  # Inside this directory initialize Supabase
-  supabase init
-  ```
+
+```bash
+# Inside this directory initialize Supabase
+supabase init
+```
 
 4. Start the local Supabase development environment
-  ```bash
-  supabase start
-  ```
-  This command will:
-  - Pull necessary Docker images
-  - Set up local Postgres database
-  - Configure auth and storage services
-  - Output local URLs and credentials
+
+```bash
+supabase start
+```
+
+This command will:
+
+- Pull necessary Docker images
+- Set up local Postgres database
+- Configure auth and storage services
+- Output local URLs and credentials
 
 5. Update your environment variables
-  Add these variables to your `.env.local` file:
-  ```
-  # Local Supabase credentials from the output of 'supabase start'
-  PUBLIC_SUPABASE_URL=http://localhost:54321
-  PUBLIC_SUPABASE_ANON_KEY=your-local-anon-key
-  PRIVATE_SUPABASE_SERVICE_ROLE=your-local-service-role-key
-  ```
+   Add these variables to your `.env.local` file:
+
+```
+# Local Supabase credentials from the output of 'supabase start'
+PUBLIC_SUPABASE_URL=http://localhost:54321
+PUBLIC_SUPABASE_ANON_KEY=your-local-anon-key
+PRIVATE_SUPABASE_SERVICE_ROLE=your-local-service-role-key
+```
 
 6. Apply database migrations. This will use the files in ./supabase
-  ```bash
-  supabase db reset
-  ```
+
+```bash
+supabase db reset
+```
 
 7. Access the local Supabase Studio dashboard
-  - Open `http://localhost:54323` in your browser
+
+- Open `http://localhost:54323` in your browser
+
+8. To access local psql database stood up by supabase
+
+```bash
+psql -h localhost -p 5432 -U postgres -d postgres
+sh: 1: less: not found # shut off pager and print directly to container shell
+```
 
 When you're done with development, you can stop the local instance:
+
 ```bash
 supabase stop
 ```
