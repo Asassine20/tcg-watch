@@ -6,8 +6,8 @@ interface Group {
   name: string
   abbreviation: string
   isSupplemental: boolean
-  publishedOn: string
-  modifiedOn: string
+  publishedOn: string | Date // ISO 8601 date string "2025-05-30T00:00:00" or Date object
+  modifiedOn: string | Date  // ISO 8601 date string "2025-05-30T00:00:00" or Date object
   categoryId: number
 }
 
