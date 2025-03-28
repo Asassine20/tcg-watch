@@ -112,6 +112,10 @@ export interface Database {
           set_name: string | null
           abbreviation: string | null
           product_id: number
+          name: string
+          clean_name: string
+          image_url: string
+          url: string
           low_price: number | null
           mid_price: number | null
           high_price: number | null
@@ -134,6 +138,10 @@ export interface Database {
           set_name?: string | null
           abbreviation?: string | null
           product_id: number
+          name: string
+          clean_name: string
+          image_url: string
+          url: string
           low_price?: number | null
           mid_price?: number | null
           high_price?: number | null
@@ -156,6 +164,10 @@ export interface Database {
           set_name?: string | null
           abbreviation?: string | null
           product_id?: number
+          name: string
+          clean_name: string
+          image_url: string
+          url: string
           low_price?: number | null
           mid_price?: number | null
           high_price?: number | null
