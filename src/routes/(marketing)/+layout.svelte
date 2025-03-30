@@ -15,12 +15,6 @@
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1 hidden sm:flex font-bold text-lg">
-      <li class="md:mx-4">
-        <a
-          href="https://github.com/CriticalMoments/CMSaasStarter"
-          class="border border-primary">★ us on Github</a
-        >
-      </li>
       <li class="md:mx-2"><a href="/blog">Blog</a></li>
       <li class="md:mx-2"><a href="/pricing">Pricing</a></li>
       <li class="md:mx-2"><a href="/account">Account</a></li>
@@ -66,12 +60,6 @@
         <li><a href="/pricing">Pricing</a></li>
         <li><a href="/account">Account</a></li>
         <li><a href="/search">Search</a></li>
-        <li>
-          <a
-            href="https://github.com/CriticalMoments/CMSaasStarter"
-            class="border border-primary">★ us on Github</a
-          >
-        </li>
       </ul>
     </div>
   </div>
@@ -94,11 +82,8 @@
       <a class="link link-hover my-1" href="/pricing">Pricing</a>
       <a class="link link-hover my-1" href="/blog">Blog</a>
       <a class="link link-hover my-1" href="/contact_us">Contact Us</a>
-      <a
-        class="link link-hover my-1"
-        href="https://github.com/CriticalMoments/CMSaasStarter">Github</a
-      >
     </nav>
+    <!--
     <aside>
       <span class="footer-title opacity-80">Sponsor</span>
       <a class="max-w-[260px]" href="https://getkiln.ai">
@@ -111,5 +96,6 @@
         <div class="link text-sm font-bold mt-2">Learn More</div>
       </a>
     </aside>
+    -->
   </footer>
 </div>
