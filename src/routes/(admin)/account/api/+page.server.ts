@@ -316,7 +316,7 @@ export const actions = {
         from_email: "no-reply@saasstarter.work",
         template_name: "welcome_email",
         template_properties: {
-          companyName: "SaaS Starter",
+          companyName: "TCG Watch",
           WebsiteBaseUrl: WebsiteBaseUrl,
         },
       })
