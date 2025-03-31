@@ -6,6 +6,9 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
+// Import necessary Supabase types
+import type { PostgrestFilterBuilder } from "@supabase/postgrest-js"
+
 export interface Database {
   public: {
     Tables: {
@@ -164,10 +167,10 @@ export interface Database {
           set_name?: string | null
           abbreviation?: string | null
           product_id?: number
-          name: string
-          clean_name: string
-          image_url: string
-          url: string
+          name?: string
+          clean_name?: string
+          image_url?: string
+          url?: string
           low_price?: number | null
           mid_price?: number | null
           high_price?: number | null
@@ -190,7 +193,49 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_distinct_group_ids: {
+        Args: Record<string, never>
+        Returns: {
+          group_id: number | null
+        }[]
+      }
+      get_products_by_group_id: {
+        Args: {
+          p_group_id: number
+        }
+        Returns: {
+          id: number
+          product_id: number
+          name: string
+          clean_name: string
+          image_url: string
+          url: string
+          low_price: number | null
+          mid_price: number | null
+          high_price: number | null
+          market_price: number | null
+          direct_low_price: number | null
+          prev_low_price: number | null
+          prev_mid_price: number | null
+          prev_high_price: number | null
+          prev_market_price: number | null
+          prev_direct_low_price: number | null
+          group_id: number | null
+          set_name: string | null
+        }[]
+      }
+      update_product_prices: {
+        Args: {
+          p_id: number
+          p_new_low_price: number | null
+          p_new_mid_price: number | null
+          p_new_high_price: number | null
+          p_new_market_price: number | null
+          p_new_direct_low_price: number | null
+          p_prev_date: string // Date in 'YYYY-MM-DD' format
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
