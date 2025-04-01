@@ -18,7 +18,16 @@
   // Filter state
   let searchTerm = ""
   let selectedSet = ""
+  let selectedPriceRange = ""
   let sets: { group_id: number; set_name: string }[] = []
+
+  // Price range options
+  const priceRanges = [
+    { value: "", label: "All Prices" },
+    { value: "0-5", label: "$0 - $5" },
+    { value: "5-20", label: "$5 - $20" },
+    { value: "20+", label: "$20+" },
+  ]
 
   // Sorting
   let sortColumn = "market_price"
@@ -32,6 +41,7 @@
     pageSize = parseInt(urlParams.get("pageSize") || "20")
     searchTerm = urlParams.get("search") || ""
     selectedSet = urlParams.get("set") || ""
+    selectedPriceRange = urlParams.get("priceRange") || ""
     sortColumn = urlParams.get("sort") || "market_price"
     sortDirection = (urlParams.get("dir") || "desc") as "asc" | "desc"
 
@@ -76,6 +86,10 @@
 
       if (selectedSet) {
         params.append("set", selectedSet)
+      }
+
+      if (selectedPriceRange) {
+        params.append("priceRange", selectedPriceRange)
       }
 
       // Fetch data from API
@@ -125,6 +139,10 @@
 
     if (selectedSet) {
       params.set("set", selectedSet)
+    }
+
+    if (selectedPriceRange) {
+      params.set("priceRange", selectedPriceRange)
     }
 
     // Update URL without reloading the page
@@ -192,7 +210,11 @@
         }}
       />
       {#if searchTerm}
-        <span class="clear-icon" on:click={clearSearch} aria-label="Clear search">×</span>
+        <span
+          class="clear-icon"
+          on:click={clearSearch}
+          aria-label="Clear search">×</span
+        >
       {/if}
       <button class="search-button" on:click={updateFiltersAndReload}
         >Search</button
@@ -204,6 +226,17 @@
         <option value="">All Sets</option>
         {#each sets as set}
           <option value={set.group_id}>{set.set_name}</option>
+        {/each}
+      </select>
+    </div>
+
+    <div class="price-range-filter">
+      <select
+        bind:value={selectedPriceRange}
+        on:change={updateFiltersAndReload}
+      >
+        {#each priceRanges as range}
+          <option value={range.value}>{range.label}</option>
         {/each}
       </select>
     </div>
@@ -392,6 +425,12 @@
 
   .set-filter select,
   .page-size-filter select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  .price-range-filter select {
     padding: 0.5rem;
     border-radius: 4px;
     border: 1px solid #ccc;

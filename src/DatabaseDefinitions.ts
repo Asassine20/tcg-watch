@@ -271,6 +271,7 @@ export interface Database {
           p_set_id?: number
           p_sort_column?: string
           p_sort_direction?: string
+          p_price_range?: string // Add this new parameter
         }
         Returns: {
           id: number

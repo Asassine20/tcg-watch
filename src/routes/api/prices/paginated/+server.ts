@@ -24,6 +24,7 @@ export async function GET(event: RequestEvent) {
     const selectedGroupId = Number(url.searchParams.get("set")) || null
     const sortColumn = url.searchParams.get("sort") || "market_price"
     const sortDirection = url.searchParams.get("dir") || "desc"
+    const priceRange = url.searchParams.get("priceRange") || ""
 
     // Validate sort column to prevent SQL injection
     const validSortColumns = [
@@ -54,6 +55,17 @@ export async function GET(event: RequestEvent) {
 
     if (selectedGroupId) {
       query = query.eq("group_id", selectedGroupId)
+    }
+
+    // Apply price range filter if provided
+    if (priceRange) {
+      if (priceRange === "0-5") {
+        query = query.gte("market_price", 0).lt("market_price", 5)
+      } else if (priceRange === "5-20") {
+        query = query.gte("market_price", 5).lt("market_price", 20)
+      } else if (priceRange === "20+") {
+        query = query.gte("market_price", 20)
+      }
     }
 
     // Add filtering for null values based on sort column
