@@ -283,11 +283,11 @@
             <th on:click={() => changeSort("set_name")}>
               Set {getSortIndicator("set_name")}
             </th>
-            <th on:click={() => changeSort("market_price")}>
-              Market Price {getSortIndicator("market_price")}
-            </th>
             <th on:click={() => changeSort("prev_market_price")}>
               Prev Price {getSortIndicator("prev_market_price")}
+            </th>
+            <th on:click={() => changeSort("market_price")}>
+              Market Price {getSortIndicator("market_price")}
             </th>
             <th on:click={() => changeSort("diff_market_price")}>
               % Change {getSortIndicator("diff_market_price")}
