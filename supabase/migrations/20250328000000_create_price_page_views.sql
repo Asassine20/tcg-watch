@@ -124,6 +124,7 @@ BEGIN
     WHEN 'set_name' THEN v_order_clause := ' ORDER BY set_name';
     WHEN 'market_price' THEN v_order_clause := ' ORDER BY market_price';
     WHEN 'diff_market_price' THEN v_order_clause := ' ORDER BY diff_market_price';
+    WHEN 'dollar_diff_market_price' THEN v_order_clause := ' ORDER BY dollar_diff_market_price';
     WHEN 'updated_at' THEN v_order_clause := ' ORDER BY updated_at';
     ELSE v_order_clause := ' ORDER BY market_price';
   END CASE;

@@ -183,6 +183,13 @@
     searchTerm = ""
     updateFiltersAndReload()
   }
+
+  // Format dollar difference with sign
+  function formatDollarDiff(value: number | null): string {
+    if (value === null || value === undefined) return "-"
+    const sign = value > 0 ? "+" : ""
+    return `${sign}${formatCurrency(value)}`
+  }
 </script>
 
 <svelte:head>
@@ -283,7 +290,10 @@
               Prev Price {getSortIndicator("prev_market_price")}
             </th>
             <th on:click={() => changeSort("diff_market_price")}>
-              Change {getSortIndicator("diff_market_price")}
+              % Change {getSortIndicator("diff_market_price")}
+            </th>
+            <th on:click={() => changeSort("dollar_diff_market_price")}>
+              $ Change {getSortIndicator("dollar_diff_market_price")}
             </th>
           </tr>
         </thead>
@@ -320,6 +330,13 @@
                 )}"
               >
                 {formatPercentage(card.diff_market_price)}
+              </td>
+              <td
+                class="dollar-change {getPercentageClass(
+                  card.dollar_diff_market_price,
+                )}"
+              >
+                {formatDollarDiff(card.dollar_diff_market_price)}
               </td>
             </tr>
           {/each}
@@ -512,7 +529,8 @@
     font-weight: 500;
   }
 
-  .price-change {
+  .price-change,
+  .dollar-change {
     font-weight: 500;
   }
 

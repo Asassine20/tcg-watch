@@ -33,6 +33,7 @@ export async function GET(event: RequestEvent) {
       "market_price",
       "prev_market_price",
       "diff_market_price",
+      "dollar_diff_market_price",
       "updated_at",
     ]
 
