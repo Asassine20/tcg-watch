@@ -17,6 +17,8 @@ interface Group {
  * Syncs price data for all available groups
  */
 export async function GET(event: RequestEvent) {
+  const startTime = Date.now()
+  console.log("Starting bulk sync of price data...")
   try {
     // Get the groups array from the request body
     const groups: Group[] = await axios
@@ -91,10 +93,17 @@ export async function GET(event: RequestEvent) {
       }
     }
 
+    const secondsLapsed = ((Date.now() - startTime) / 1000).toFixed(2)
+    console.info(
+      `Took ${secondsLapsed} seconds to process ${results.length} groups`,
+    )
+
     return json({
       success: true,
       processed: results.length,
-      results,
+      timeTaken: `${((Date.now() - startTime) / 1000).toFixed(2)} seconds`, // Time taken in seconds
+      message: `Bulk sync completed for ${results.length} groups.`,
+      results: results,
     })
   } catch (error) {
     console.error("Unexpected error during bulk sync:", error)
