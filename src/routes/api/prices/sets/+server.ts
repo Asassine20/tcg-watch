@@ -16,15 +16,8 @@ export async function GET(event: RequestEvent) {
       )
     }
 
-    // Query for distinct sets
-    const { data, error } = await event.locals.supabase
-      .from("price_history")
-      .select("group_id, set_name")
-      .not("set_name", "is", null)
-      .not("group_id", "is", null)
-      // @ts-ignore (distinct is valid at runtime but missing in types)
-      .distinct("group_id, set_name")
-      .order("set_name")
+    // Call the SQL function to get distinct sets
+    const { data, error } = await event.locals.supabase.rpc("get_distinct_sets")
 
     if (error) {
       console.error("Error fetching sets:", error)

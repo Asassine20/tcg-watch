@@ -21,7 +21,7 @@ export async function GET(event: RequestEvent) {
     const page = parseInt(url.searchParams.get("page") || "1")
     const pageSize = parseInt(url.searchParams.get("pageSize") || "20")
     const searchTerm = url.searchParams.get("search") || ""
-    const selectedGroupId = Number(url.searchParams.get("set")) || 24073
+    const selectedGroupId = Number(url.searchParams.get("set")) || null
     const sortColumn = url.searchParams.get("sort") || "market_price"
     const sortDirection = url.searchParams.get("dir") || "desc"
 

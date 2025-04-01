@@ -159,6 +159,12 @@
     if (!value) return ""
     return value > 0 ? "positive" : value < 0 ? "negative" : ""
   }
+
+  // Function to clear search text and reload
+  function clearSearch() {
+    searchTerm = ""
+    updateFiltersAndReload()
+  }
 </script>
 
 <svelte:head>
@@ -185,7 +191,12 @@
           }
         }}
       />
-      <button on:click={updateFiltersAndReload}>Search</button>
+      {#if searchTerm}
+        <span class="clear-icon" on:click={clearSearch} aria-label="Clear search">×</span>
+      {/if}
+      <button class="search-button" on:click={updateFiltersAndReload}
+        >Search</button
+      >
     </div>
 
     <div class="set-filter">
@@ -337,13 +348,37 @@
     display: flex;
     flex: 1;
     min-width: 250px;
+    position: relative;
   }
 
   .search-filter input {
     flex: 1;
     padding: 0.5rem;
+    padding-right: 2rem; /* Make room for the clear icon */
     border-radius: 4px 0 0 4px;
     border: 1px solid #ccc;
+  }
+
+  .clear-icon {
+    position: absolute;
+    right: 4.5rem; /* Position to the left of the search button */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .clear-icon:hover {
+    opacity: 1;
+    color: #666;
   }
 
   .search-filter button {

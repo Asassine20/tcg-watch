@@ -236,6 +236,53 @@ export interface Database {
         }
         Returns: boolean
       }
+      get_distinct_sets: {
+        Args: Record<string, never>
+        Returns: {
+          group_id: number
+          set_name: string
+        }[]
+      }
+      get_paginated_cards: {
+        Args: {
+          p_page: number
+          p_page_size: number
+          p_search?: string
+          p_set_id?: number
+          p_sort_column?: string
+          p_sort_direction?: string
+        }
+        Returns: {
+          id: number
+          category_id: number | null
+          group_id: number | null
+          set_name: string | null
+          abbreviation: string | null
+          product_id: number
+          name: string | null
+          clean_name: string | null
+          image_url: string | null
+          url: string | null
+          low_price: number | null
+          mid_price: number | null
+          high_price: number | null
+          market_price: number | null
+          direct_low_price: number | null
+          prev_low_price: number | null
+          prev_mid_price: number | null
+          prev_high_price: number | null
+          prev_market_price: number | null
+          prev_direct_low_price: number | null
+          diff_low_price: number | null
+          diff_mid_price: number | null
+          diff_high_price: number | null
+          diff_market_price: number | null
+          diff_direct_low_price: number | null
+          sub_type_name: string | null
+          prev_date: string | null
+          total_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
