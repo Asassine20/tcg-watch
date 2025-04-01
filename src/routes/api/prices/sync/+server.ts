@@ -125,27 +125,63 @@ export async function POST(event: RequestEvent) {
       }
     }
 
-    // Insert the data into the price_history table
-    const { data, error } = await event.locals.supabase
-      .from("price_history")
-      .upsert(priceRecords, {
-        onConflict: "product_id,sub_type_name",
-        ignoreDuplicates: false,
-      })
-      .select()
+    // Call the upsert_price_history function for each record
+    const results = []
 
-    if (error) {
-      console.error("Error inserting price records:", error)
-      return json(
-        { error: "Failed to insert price records", details: error },
-        { status: 500 },
+    for (const record of priceRecords) {
+      const { data, error } = await event.locals.supabase.rpc(
+        "upsert_price_history",
+        {
+          p_category_id: record.category_id,
+          p_group_id: record.group_id,
+          p_set_name: record.set_name,
+          p_abbreviation: record.abbreviation,
+          p_product_id: record.product_id,
+          p_name: record.name,
+          p_clean_name: record.clean_name,
+          p_image_url: record.image_url,
+          p_url: record.url,
+          p_low_price: record.low_price,
+          p_mid_price: record.mid_price,
+          p_high_price: record.high_price,
+          p_market_price: record.market_price,
+          p_direct_low_price: record.direct_low_price,
+          p_sub_type_name: record.sub_type_name,
+        },
       )
+
+      if (error) {
+        console.error("Error upserting record:", error)
+        throw error
+      }
+
+      results.push(data)
     }
 
+    // Retrieve updated records for verification
+    const { data: updatedRecords, error: selectError } =
+      await event.locals.supabase
+        .from("price_history")
+        .select()
+        .in(
+          "product_id",
+          priceRecords.map((record) => record.product_id),
+        )
+        .in(
+          "sub_type_name",
+          priceRecords.map((record) => record.sub_type_name),
+        )
+
+    if (selectError) {
+      console.error("Error retrieving updated records:", selectError)
+      throw selectError
+    }
+
+    // Return the response
     return json({
       success: true,
-      message: `Processed ${priceRecords.length} price records for ${group.name}`,
-      data,
+      message: `Successfully updated ${priceRecords.length} records`,
+      data: updatedRecords,
     })
   } catch (error) {
     console.error("Unexpected error during price sync:", error)

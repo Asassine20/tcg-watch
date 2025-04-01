@@ -224,6 +224,26 @@ export interface Database {
           set_name: string | null
         }[]
       }
+      upsert_price_history: {
+        Args: {
+          p_category_id: number | null
+          p_group_id: number | null
+          p_set_name: string | null
+          p_abbreviation: string | null
+          p_product_id: number
+          p_name: string
+          p_clean_name: string
+          p_image_url: string
+          p_url: string
+          p_low_price: number | null
+          p_mid_price: number | null
+          p_high_price: number | null
+          p_market_price: number | null
+          p_direct_low_price: number | null
+          p_sub_type_name: string | null
+        }
+        Returns: void
+      }
       update_product_prices: {
         Args: {
           p_id: number
