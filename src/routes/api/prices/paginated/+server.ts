@@ -31,6 +31,7 @@ export async function GET(event: RequestEvent) {
       "name",
       "set_name",
       "market_price",
+      "prev_market_price",
       "diff_market_price",
       "updated_at",
     ]
@@ -70,7 +71,9 @@ export async function GET(event: RequestEvent) {
 
     // Add filtering for null values based on sort column
     if (
-      ["market_price", "diff_market_price"].includes(actualSortColumn) &&
+      ["market_price", "prev_market_price", "diff_market_price"].includes(
+        actualSortColumn,
+      ) &&
       sortDirection === "desc"
     ) {
       // When sorting by price in descending order, exclude null values

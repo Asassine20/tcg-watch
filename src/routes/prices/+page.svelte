@@ -279,6 +279,9 @@
             <th on:click={() => changeSort("market_price")}>
               Market Price {getSortIndicator("market_price")}
             </th>
+            <th on:click={() => changeSort("prev_market_price")}>
+              Prev Price {getSortIndicator("prev_market_price")}
+            </th>
             <th on:click={() => changeSort("diff_market_price")}>
               Change {getSortIndicator("diff_market_price")}
             </th>
@@ -308,6 +311,9 @@
               </td>
               <td class="set-name">{card.set_name}</td>
               <td class="market-price">{formatCurrency(card.market_price)}</td>
+              <td class="prev-market-price"
+                >{formatCurrency(card.prev_market_price)}</td
+              >
               <td
                 class="price-change {getPercentageClass(
                   card.diff_market_price,
@@ -501,7 +507,8 @@
     color: #666;
   }
 
-  .market-price {
+  .market-price,
+  .prev-market-price {
     font-weight: 500;
   }
 
