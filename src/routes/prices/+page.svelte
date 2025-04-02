@@ -207,57 +207,90 @@
   <title>Trading Card Prices | TCG Watch</title>
 </svelte:head>
 
-<div class="container prices-page">
-  <h1>Trading Card Prices</h1>
+<div class="container mx-auto px-4 py-6">
+  <h1 class="text-3xl font-bold mb-6">Trading Card Prices</h1>
 
-  <div class="filters">
-    <div class="search-filter">
-      <input
-        type="text"
-        placeholder="Search cards..."
-        bind:value={searchTerm}
-        on:input={() => {
-          if (searchTerm === "") {
-            updateFiltersAndReload()
-          }
-        }}
-        on:keypress={(e) => {
-          if (e.key === "Enter") {
-            updateFiltersAndReload()
-          }
-        }}
-      />
-      {#if searchTerm}
-        <span
-          class="clear-icon"
-          on:click={clearSearch}
-          aria-label="Clear search">×</span
+  <div class="flex flex-wrap gap-3 mb-6 items-center">
+    <div class="form-control flex-1 min-w-[250px] relative pt-6">
+      <!-- DaisyUI Search Input -->
+      <label class="input input-bordered flex items-center gap-2 w-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          class="h-[1em] w-[1em] opacity-50"
+          ><g stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+            ><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"
+            ></path></g
+          ></svg
         >
-      {/if}
-      <button class="search-button" on:click={updateFiltersAndReload}
-        >Search</button
-      >
+        <input
+          type="text"
+          class="grow"
+          placeholder="Search"
+          bind:value={searchTerm}
+          on:input={() => {
+            if (searchTerm === "") {
+              updateFiltersAndReload()
+            }
+          }}
+          on:keypress={(e) => {
+            if (e.key === "Enter") {
+              updateFiltersAndReload()
+            }
+          }}
+        />
+        {#if searchTerm}
+          <button class="btn btn-ghost btn-xs" on:click={clearSearch}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="h-4 w-4"
+              ><path
+                fill-rule="evenodd"
+                d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+                clip-rule="evenodd"
+              /></svg
+            >
+          </button>
+        {/if}
+      </label>
+      <!-- End DaisyUI Search Input -->
     </div>
 
-    <div class="type-filter">
-      <select bind:value={type} on:change={updateFiltersAndReload}>
+    <fieldset class="form-control">
+      <legend>Type</legend>
+      <select
+        class="select select-bordered"
+        bind:value={type}
+        on:change={updateFiltersAndReload}
+      >
         {#each typeOptions as option}
           <option value={option.value}>{option.label}</option>
         {/each}
       </select>
-    </div>
+    </fieldset>
 
-    <div class="set-filter">
-      <select bind:value={selectedSet} on:change={updateFiltersAndReload}>
+    <fieldset class="form-control">
+      <legend>Set</legend>
+      <select
+        class="select select-bordered"
+        bind:value={selectedSet}
+        on:change={updateFiltersAndReload}
+      >
         <option value="">All Sets</option>
         {#each sets as set}
           <option value={set.group_id}>{set.set_name}</option>
         {/each}
       </select>
-    </div>
+    </fieldset>
 
-    <div class="price-range-filter">
+    <fieldset class="form-control">
+      <legend>Price Range</legend>
       <select
+        class="select"
         bind:value={selectedPriceRange}
         on:change={updateFiltersAndReload}
       >
@@ -265,95 +298,158 @@
           <option value={range.value}>{range.label}</option>
         {/each}
       </select>
-    </div>
+    </fieldset>
 
-    <div class="page-size-filter">
-      <label>
-        Items per page:
-        <select bind:value={pageSize} on:change={updateFiltersAndReload}>
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-      </label>
-    </div>
+    <fieldset class="form-control">
+      <legend>Items per page</legend>
+      <select
+        class="select select-bordered"
+        bind:value={pageSize}
+        on:change={updateFiltersAndReload}
+      >
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </fieldset>
   </div>
 
   {#if error}
-    <div class="error-message">
-      {error}
+    <div class="alert alert-error mb-4">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 stroke-current"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span>{error}</span>
     </div>
   {/if}
 
-  <div class="table-container">
+  <div class="overflow-x-auto mb-4">
     {#if loading}
-      <div class="loading">Loading cards data...</div>
+      <div class="flex justify-center items-center p-8">
+        <span class="loading loading-spinner loading-lg text-primary"></span>
+        <span class="ml-2">Loading cards data...</span>
+      </div>
     {:else if cards.length === 0}
-      <div class="no-results">No cards found matching your filters.</div>
+      <div class="alert alert-info">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="h-6 w-6 shrink-0 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <span>No cards found matching your filters.</span>
+      </div>
     {:else}
-      <table class="cards-table">
+      <table class="table table-zebra">
         <thead>
           <tr>
             <th>Image</th>
-            <th on:click={() => changeSort("name")}>
+            <th
+              class="cursor-pointer hover:bg-base-300"
+              on:click={() => changeSort("name")}
+            >
               Card Name {getSortIndicator("name")}
             </th>
-            <th on:click={() => changeSort("set_name")}>
+            <th
+              class="cursor-pointer hover:bg-base-300"
+              on:click={() => changeSort("set_name")}
+            >
               Set {getSortIndicator("set_name")}
             </th>
-            <th on:click={() => changeSort("prev_market_price")}>
+            <th
+              class="cursor-pointer hover:bg-base-300"
+              on:click={() => changeSort("prev_market_price")}
+            >
               Prev Price {getSortIndicator("prev_market_price")}
             </th>
-            <th on:click={() => changeSort("market_price")}>
+            <th
+              class="cursor-pointer hover:bg-base-300"
+              on:click={() => changeSort("market_price")}
+            >
               Market Price {getSortIndicator("market_price")}
             </th>
-            <th on:click={() => changeSort("diff_market_price")}>
+            <th
+              class="cursor-pointer hover:bg-base-300"
+              on:click={() => changeSort("diff_market_price")}
+            >
               % Change {getSortIndicator("diff_market_price")}
             </th>
-            <th on:click={() => changeSort("dollar_diff_market_price")}>
+            <th
+              class="cursor-pointer hover:bg-base-300"
+              on:click={() => changeSort("dollar_diff_market_price")}
+            >
               $ Change {getSortIndicator("dollar_diff_market_price")}
             </th>
           </tr>
         </thead>
         <tbody>
           {#each cards as card}
-            <tr>
-              <td class="card-image">
+            <tr class="hover">
+              <td class="w-[50px] h-[70px]">
                 {#if card.image_url}
-                  <img src={card.image_url} alt={card.name} loading="lazy" />
+                  <img
+                    src={card.image_url}
+                    alt={card.name}
+                    loading="lazy"
+                    class="max-w-full max-h-full object-contain"
+                  />
                 {:else}
-                  <div class="no-image">No Image</div>
+                  <div
+                    class="w-[50px] h-[70px] flex items-center justify-center bg-base-200 text-xs text-opacity-70"
+                  >
+                    No Image
+                  </div>
                 {/if}
               </td>
-              <td class="card-name">
+              <td>
                 <a
                   href={card.url || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
+                  class="link link-primary font-medium"
                 >
                   {card.name}
                 </a>
                 {#if card.sub_type_name}
-                  <span class="subtype">{card.sub_type_name}</span>
+                  <span class="block text-sm text-opacity-70"
+                    >{card.sub_type_name}</span
+                  >
                 {/if}
               </td>
-              <td class="set-name">{card.set_name}</td>
-              <td class="prev-market-price"
+              <td>{card.set_name}</td>
+              <td class="font-medium"
                 >{formatCurrency(card.prev_market_price)}</td
               >
-              <td class="market-price">{formatCurrency(card.market_price)}</td>
+              <td class="font-medium">{formatCurrency(card.market_price)}</td>
               <td
-                class="price-change {getPercentageClass(
-                  card.diff_market_price,
-                )}"
+                class:text-success={card.diff_market_price > 0}
+                class:text-error={card.diff_market_price < 0}
+                class="font-medium"
               >
                 {formatPercentage(card.diff_market_price)}
               </td>
               <td
-                class="dollar-change {getPercentageClass(
-                  card.dollar_diff_market_price,
-                )}"
+                class:text-success={card.dollar_diff_market_price > 0}
+                class:text-error={card.dollar_diff_market_price < 0}
+                class="font-medium"
               >
                 {formatDollarDiff(card.dollar_diff_market_price)}
               </td>
@@ -364,249 +460,49 @@
     {/if}
   </div>
 
-  <div class="pagination">
-    <button disabled={currentPage <= 1} on:click={() => changePage(1)}>
-      &laquo; First
+  <div class="join flex justify-center my-6">
+    <button
+      class="join-item btn"
+      disabled={currentPage <= 1}
+      on:click={() => changePage(1)}
+    >
+      «
     </button>
 
     <button
+      class="join-item btn"
       disabled={currentPage <= 1}
       on:click={() => changePage(currentPage - 1)}
     >
-      &lt; Previous
+      Previous
     </button>
 
-    <span class="page-info">
-      Page {currentPage} of {totalPages}
-    </span>
+    <button class="join-item btn btn-disabled">
+      {currentPage} of {totalPages}
+    </button>
 
     <button
+      class="join-item btn"
       disabled={currentPage >= totalPages}
       on:click={() => changePage(currentPage + 1)}
     >
-      Next &gt;
+      Next
     </button>
 
     <button
+      class="join-item btn"
       disabled={currentPage >= totalPages}
       on:click={() => changePage(totalPages)}
     >
-      Last &raquo;
+      »
     </button>
   </div>
 
-  <div class="page-summary">
+  <div class="text-center text-opacity-60 text-sm">
     Showing {cards.length} of {totalItems} cards
   </div>
 </div>
 
 <style>
-  .prices-page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-  }
-
-  h1 {
-    margin-bottom: 1.5rem;
-  }
-
-  .filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    align-items: center;
-  }
-
-  .search-filter {
-    display: flex;
-    flex: 1;
-    min-width: 250px;
-    position: relative;
-  }
-
-  .search-filter input {
-    flex: 1;
-    padding: 0.5rem;
-    padding-right: 2rem; /* Make room for the clear icon */
-    border-radius: 4px 0 0 4px;
-    border: 1px solid #ccc;
-  }
-
-  .clear-icon {
-    position: absolute;
-    right: 4.5rem; /* Position to the left of the search button */
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-  }
-
-  .clear-icon:hover {
-    opacity: 1;
-    color: #666;
-  }
-
-  .search-filter button {
-    padding: 0.5rem 1rem;
-    background: #0077cc;
-    color: white;
-    border: none;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-  }
-
-  .type-filter select,
-  .set-filter select,
-  .page-size-filter select {
-    padding: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-
-  .price-range-filter select {
-    padding: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-
-  .table-container {
-    overflow-x: auto;
-    margin-bottom: 1rem;
-  }
-
-  .cards-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .cards-table th {
-    background-color: #f5f5f5;
-    padding: 0.75rem;
-    text-align: left;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .cards-table th:hover {
-    background-color: #e5e5e5;
-  }
-
-  .cards-table td {
-    padding: 0.75rem;
-    border-bottom: 1px solid #eee;
-  }
-
-  .card-image {
-    width: 50px;
-    height: 70px;
-  }
-
-  .card-image img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-
-  .no-image {
-    width: 50px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f5f5f5;
-    font-size: 0.7rem;
-    color: #666;
-  }
-
-  .card-name a {
-    color: #0077cc;
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .card-name a:hover {
-    text-decoration: underline;
-  }
-
-  .subtype {
-    display: block;
-    font-size: 0.8rem;
-    color: #666;
-  }
-
-  .market-price,
-  .prev-market-price {
-    font-weight: 500;
-  }
-
-  .price-change,
-  .dollar-change {
-    font-weight: 500;
-  }
-
-  .positive {
-    color: #00aa00;
-  }
-
-  .negative {
-    color: #dd0000;
-  }
-
-  .pagination {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin: 1.5rem 0;
-  }
-
-  .pagination button {
-    padding: 0.5rem 0.75rem;
-    background: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  .pagination button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .pagination button:hover:not(:disabled) {
-    background: #e5e5e5;
-  }
-
-  .page-info {
-    display: flex;
-    align-items: center;
-    padding: 0 0.75rem;
-  }
-
-  .page-summary {
-    text-align: center;
-    color: #666;
-  }
-
-  .loading,
-  .no-results,
-  .error-message {
-    padding: 2rem;
-    text-align: center;
-  }
-
-  .error-message {
-    color: #dd0000;
-    background-color: #ffeeee;
-    border-radius: 4px;
-  }
+  /* DaisyUI and Tailwind handle most styling - we can remove almost all custom CSS */
 </style>
