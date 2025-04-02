@@ -6,9 +6,6 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-// Import necessary Supabase types
-import type { PostgrestFilterBuilder } from "@supabase/postgrest-js"
-
 export interface Database {
   public: {
     Tables: {

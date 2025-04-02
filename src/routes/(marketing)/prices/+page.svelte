@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte"
-  import { page } from "$app/stores"
   import { goto } from "$app/navigation"
   import { formatCurrency, formatPercentage } from "$lib/utils/formatters"
 
@@ -183,12 +182,6 @@
     return sortDirection === "asc" ? "▲" : "▼"
   }
 
-  // Format numbers for display
-  function getPercentageClass(value: number | null): string {
-    if (!value) return ""
-    return value > 0 ? "positive" : value < 0 ? "negative" : ""
-  }
-
   // Function to clear search text and reload
   function clearSearch() {
     searchTerm = ""
@@ -242,7 +235,11 @@
           }}
         />
         {#if searchTerm}
-          <button class="btn btn-ghost btn-xs" on:click={clearSearch}>
+          <button
+            class="btn btn-ghost btn-xs"
+            on:click={clearSearch}
+            aria-label="Clear search"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

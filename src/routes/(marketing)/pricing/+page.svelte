@@ -1,6 +1,5 @@
 <script lang="ts">
   import PricingModule from "./pricing_module.svelte"
-  import { WebsiteName } from "./../../../config"
 
   type PlanFeatureRow = {
     name: string
