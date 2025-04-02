@@ -12,41 +12,34 @@
   prefersdark: false; /* set as default dark mode (prefers-color-scheme:dark) */
   color-scheme: light; /* color of browser-provided UI */
 
-  --color-primary: #232f3e; 
-  --color-primary-content: #ffffff; 
-  
-  --color-secondary: #ff6347; 
-  --color-secondary-content: #232f3e; 
-  
-  --color-accent: #00d1b2; 
-  --color-accent-content: #ffffff; 
-  
-  --color-neutral: #374151; 
+  --color-primary: #232f3e;
+  --color-primary-content: #ffffff;
+
+  --color-secondary: #ff6347;
+  --color-secondary-content: #232f3e;
+
+  --color-accent: #00d1b2;
+  --color-accent-content: #ffffff;
+
+  --color-neutral: #374151;
   --color-neutral-content: #e2e8f0;
-  
-  --color-base-100: #ffffff; 
-  --color-base-200: #f8fafc; 
+
+  --color-base-100: #ffffff;
+  --color-base-200: #f8fafc;
   --color-base-300: #f1f5f9;
-  --color-base-content: #374151; 
-  
-  --color-info: #2563eb; 
-  --color-info-content: #eff6ff; 
-  
-  --color-success: #16a34a; 
-  --color-success-content: #dcfce7; 
-  
-  --color-warning: #fbbf24; 
-  --color-warning-content: #fffbe7; 
-  
-  --color-error: #ef4444; 
-  --color-error-content: #fce8e8; 
-  
-  
-  
-  
+  --color-base-content: #374151;
 
+  --color-info: #2563eb;
+  --color-info-content: #eff6ff;
 
-  
+  --color-success: #16a34a;
+  --color-success-content: #dcfce7;
+
+  --color-warning: #fbbf24;
+  --color-warning-content: #fffbe7;
+
+  --color-error: #ef4444;
+  --color-error-content: #fce8e8;
 
   /* border radius */
   --radius-selector: 1rem;
