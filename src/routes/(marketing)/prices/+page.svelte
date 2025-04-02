@@ -204,11 +204,11 @@
 </script>
 
 <svelte:head>
-  <title>Trading Card Prices | TCG Watch</title>
+  <title>TCG Trends | TCG Watch</title>
 </svelte:head>
 
 <div class="container mx-auto px-4 py-6">
-  <h1 class="text-3xl font-bold mb-6">Trading Card Prices</h1>
+  <h1 class="text-3xl font-bold mb-6">Trading Card Trends</h1>
 
   <div class="flex flex-wrap gap-3 mb-6 items-center">
     <div class="form-control flex-1 min-w-[250px] relative pt-6">
