@@ -129,7 +129,18 @@ export interface Database {
           prev_high_price: number | null
           prev_market_price: number | null
           prev_direct_low_price: number | null
+          diff_low_price: number | null
+          diff_mid_price: number | null
+          diff_high_price: number | null
+          diff_market_price: number | null
+          diff_direct_low_price: number | null
+          dollar_diff_low_price: number | null
+          dollar_diff_mid_price: number | null
+          dollar_diff_high_price: number | null
+          dollar_diff_market_price: number | null
+          dollar_diff_direct_low_price: number | null
           sub_type_name: string | null
+          type: string
           prev_date: string | null
           created_at: string | null
           updated_at: string | null
@@ -156,6 +167,7 @@ export interface Database {
           prev_market_price?: number | null
           prev_direct_low_price?: number | null
           sub_type_name?: string | null
+          type?: string
           prev_date?: string | null
           created_at?: string | null
           updated_at?: string | null
@@ -181,7 +193,18 @@ export interface Database {
           prev_high_price?: number | null
           prev_market_price?: number | null
           prev_direct_low_price?: number | null
+          diff_low_price?: number | null
+          diff_mid_price?: number | null
+          diff_high_price?: number | null
+          diff_market_price?: number | null
+          diff_direct_low_price?: number | null
+          dollar_diff_low_price?: number | null
+          dollar_diff_mid_price?: number | null
+          dollar_diff_high_price?: number | null
+          dollar_diff_market_price?: number | null
+          dollar_diff_direct_low_price?: number | null
           sub_type_name?: string | null
+          type?: string
           prev_date?: string | null
           created_at?: string | null
           updated_at?: string | null
@@ -241,6 +264,7 @@ export interface Database {
           p_market_price: number | null
           p_direct_low_price: number | null
           p_sub_type_name: string | null
+          p_type?: string | null
         }
         Returns: void
       }
@@ -271,7 +295,8 @@ export interface Database {
           p_set_id?: number
           p_sort_column?: string
           p_sort_direction?: string
-          p_price_range?: string // Add this new parameter
+          p_price_range?: string
+          p_type?: string
         }
         Returns: {
           id: number
@@ -299,7 +324,13 @@ export interface Database {
           diff_high_price: number | null
           diff_market_price: number | null
           diff_direct_low_price: number | null
+          dollar_diff_low_price: number | null
+          dollar_diff_mid_price: number | null
+          dollar_diff_high_price: number | null
+          dollar_diff_market_price: number | null
+          dollar_diff_direct_low_price: number | null
           sub_type_name: string | null
+          type: string
           prev_date: string | null
           total_count: number
         }[]

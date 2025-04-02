@@ -1,6 +1,11 @@
 import { json } from "@sveltejs/kit"
 import type { RequestEvent } from "@sveltejs/kit"
 
+interface ExtendedData {
+  name: string
+  displayName: string
+  value: string
+}
 interface Group {
   groupId: number
   name: string
@@ -19,6 +24,7 @@ interface ProductData {
   url: string
   categoryId: number
   groupId: number
+  type: string
 }
 
 interface PriceData {
@@ -99,6 +105,7 @@ export async function POST(event: RequestEvent) {
           direct_low_price: null,
           sub_type_name: null,
           prev_date: currentDate,
+          type: product.type,
         })
       } else {
         // Create a record for each price variant (different subTypeName)
@@ -120,6 +127,7 @@ export async function POST(event: RequestEvent) {
             direct_low_price: price.directLowPrice,
             sub_type_name: price.subTypeName,
             prev_date: currentDate,
+            type: product.type, // Default to "card" for all products
           })
         }
       }
@@ -147,6 +155,7 @@ export async function POST(event: RequestEvent) {
           p_market_price: record.market_price,
           p_direct_low_price: record.direct_low_price,
           p_sub_type_name: record.sub_type_name,
+          p_type: record.type,
         },
       )
 
@@ -244,6 +253,17 @@ async function fetchCombinedProductData(
     return productsData.results.map((product: any) => {
       const productId = product.productId || product.id
 
+      let type = "sealed"
+
+      if (product.extendedData) {
+        const extendedData = product.extendedData as ExtendedData[]
+        const typeData = extendedData.find((data) => data.name === "Number")
+
+        if (typeData) {
+          type = "card"
+        }
+      }
+
       return {
         productId,
         name: product.name || "",
@@ -253,6 +273,7 @@ async function fetchCombinedProductData(
         categoryId: product.categoryId || null,
         groupId,
         prices: pricesByProductId.get(productId) || [],
+        type,
       }
     })
   } catch (error) {

@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS price_history (
   dollar_diff_market_price DECIMAL,
   dollar_diff_direct_low_price DECIMAL,
   sub_type_name TEXT,
+  type TEXT,
   prev_date DATE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -106,7 +107,8 @@ CREATE OR REPLACE FUNCTION upsert_price_history(
   p_high_price DECIMAL,
   p_market_price DECIMAL,
   p_direct_low_price DECIMAL,
-  p_sub_type_name TEXT
+  p_sub_type_name TEXT,
+  p_type TEXT
 ) RETURNS void AS $$
 BEGIN
   -- Try to update first
@@ -130,6 +132,7 @@ BEGIN
     high_price = p_high_price,
     market_price = p_market_price,
     direct_low_price = p_direct_low_price,
+    type = p_type,
     prev_date = CURRENT_DATE,
     updated_at = NOW()
   WHERE product_id = p_product_id AND sub_type_name = p_sub_type_name;
@@ -141,13 +144,13 @@ BEGIN
       name, clean_name, image_url, url, 
       low_price, mid_price, high_price, market_price, direct_low_price,
       prev_low_price, prev_mid_price, prev_high_price, prev_market_price, prev_direct_low_price,
-      sub_type_name, prev_date
+      sub_type_name, prev_date, type
     ) VALUES (
       p_category_id, p_group_id, p_set_name, p_abbreviation, p_product_id,
       p_name, p_clean_name, p_image_url, p_url,
       p_low_price, p_mid_price, p_high_price, p_market_price, p_direct_low_price,
       NULL, NULL, NULL, NULL, NULL,
-      p_sub_type_name, CURRENT_DATE
+      p_sub_type_name, CURRENT_DATE, p_type
     );
   END IF;
 END;
