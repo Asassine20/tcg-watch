@@ -25,6 +25,9 @@ export async function GET(event: RequestEvent) {
     const sortColumn = url.searchParams.get("sort") || "market_price"
     const sortDirection = url.searchParams.get("dir") || "desc"
     const priceRange = url.searchParams.get("priceRange") || ""
+    const productType = url.searchParams.get("type") || "card"
+
+    console.warn(`Product type: ${productType}`)
 
     // Validate sort column to prevent SQL injection
     const validSortColumns = [
@@ -36,6 +39,12 @@ export async function GET(event: RequestEvent) {
       "dollar_diff_market_price",
       "updated_at",
     ]
+
+    // Validate product type
+    const validProductTypes = ["card", "sealed"]
+    if (!validProductTypes.includes(productType)) {
+      return json({ error: "Invalid product type" }, { status: 400 })
+    }
 
     const actualSortColumn = validSortColumns.includes(sortColumn)
       ? sortColumn
@@ -51,6 +60,8 @@ export async function GET(event: RequestEvent) {
       .select("*", { count: "exact" })
 
     // Apply filters
+    query.eq("type", productType)
+
     if (searchTerm) {
       query = query.ilike("name", `%${searchTerm}%`)
     }

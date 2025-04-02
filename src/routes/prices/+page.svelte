@@ -19,7 +19,14 @@
   let searchTerm = ""
   let selectedSet = ""
   let selectedPriceRange = ""
+  let type = "card" // Default to "card" type
   let sets: { group_id: number; set_name: string }[] = []
+
+  // Type options
+  const typeOptions = [
+    { value: "card", label: "Cards" },
+    { value: "sealed", label: "Sealed Products" },
+  ]
 
   // Price range options
   const priceRanges = [
@@ -44,6 +51,7 @@
     selectedPriceRange = urlParams.get("priceRange") || ""
     sortColumn = urlParams.get("sort") || "market_price"
     sortDirection = (urlParams.get("dir") || "desc") as "asc" | "desc"
+    type = urlParams.get("type") || "card"
 
     // Load sets for filter dropdown
     await loadSets()
@@ -79,6 +87,8 @@
         sort: sortColumn,
         dir: sortDirection,
       })
+
+      params.append("type", type)
 
       if (searchTerm) {
         params.append("search", searchTerm)
@@ -132,6 +142,7 @@
     params.set("pageSize", pageSize.toString())
     params.set("sort", sortColumn)
     params.set("dir", sortDirection)
+    params.set("type", type)
 
     if (searchTerm) {
       params.set("search", searchTerm)
@@ -228,6 +239,14 @@
       >
     </div>
 
+    <div class="type-filter">
+      <select bind:value={type} on:change={updateFiltersAndReload}>
+        {#each typeOptions as option}
+          <option value={option.value}>{option.label}</option>
+        {/each}
+      </select>
+    </div>
+
     <div class="set-filter">
       <select bind:value={selectedSet} on:change={updateFiltersAndReload}>
         <option value="">All Sets</option>
@@ -320,10 +339,10 @@
                 {/if}
               </td>
               <td class="set-name">{card.set_name}</td>
-              <td class="market-price">{formatCurrency(card.market_price)}</td>
               <td class="prev-market-price"
                 >{formatCurrency(card.prev_market_price)}</td
               >
+              <td class="market-price">{formatCurrency(card.market_price)}</td>
               <td
                 class="price-change {getPercentageClass(
                   card.diff_market_price,
@@ -446,6 +465,7 @@
     cursor: pointer;
   }
 
+  .type-filter select,
   .set-filter select,
   .page-size-filter select {
     padding: 0.5rem;
