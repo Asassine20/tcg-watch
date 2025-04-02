@@ -1,4 +1,4 @@
-export const defaultPlanId = "basic";
+export const defaultPlanId = "basic"
 
 export const pricingPlans = [
   {
@@ -46,4 +46,4 @@ export const pricingPlans = [
     ],
   },
   */
-];
+]
