@@ -1,11 +1,5 @@
 import { json } from "@sveltejs/kit"
-import { createClient } from "@supabase/supabase-js"
 import type { RequestEvent } from "../../(marketing)/login/$types"
-
-// Import your environment variables for Supabase
-// These should be defined in your .env file or environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 /**
  * GET handler for /api/prices

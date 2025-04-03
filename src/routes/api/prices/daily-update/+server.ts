@@ -1,6 +1,5 @@
 import { json } from "@sveltejs/kit"
 import type { RequestEvent } from "@sveltejs/kit"
-import type { Database } from "../../../../DatabaseDefinitions"
 
 interface ProductData {
   productId: number
@@ -43,8 +42,7 @@ export async function GET(event: RequestEvent) {
       )
     }
 
-    // Get the typed Supabase client
-    const supabase = event.locals.supabase as any // Need to cast because of type issues
+    const supabase = event.locals.supabase
 
     // 1. Get all distinct group IDs from the database using our SQL function
     const { data: groups, error: groupError } = await supabase.rpc(
