@@ -74,7 +74,7 @@
           Is there a free plan available?
         </div>
         <div class="collapse-content">
-          <p>We do not have any free tiers at the moment</p>
+          <p>Yes, we have a free plan for users to look at market data.</p>
         </div>
       </div>
       <div class="collapse collapse-arrow join-item border border-primary">
