@@ -2,6 +2,17 @@ export const defaultPlanId = "basic"
 
 export const pricingPlans = [
   {
+    id: "free",
+    name: "Free",
+    description: "Get full access to market prices",
+    price: "$0",
+    priceIntervalName: "per month",
+    stripe_price_id: null, // Replace with actual Stripe price ID
+    features: [
+      "Access to all market prices",
+    ],
+  },
+  {
     id: "basic",
     name: "Basic",
     description: "Get full access to market insights and pricing trends.",
