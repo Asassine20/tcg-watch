@@ -2,6 +2,9 @@
   import { onMount } from "svelte"
   import { goto } from "$app/navigation"
   import { formatCurrency, formatPercentage } from "$lib/utils/formatters"
+  import type { Database } from "../../../DatabaseDefinitions.js"
+
+  type PriceHistory = Database["public"]["Tables"]["price_history"]["Row"]
 
   // Pagination state
   let currentPage = 1
@@ -10,7 +13,7 @@
   let totalPages = 0
 
   // Table data
-  let cards: any[] = []
+  let cards: PriceHistory[] = []
   let loading = true
   let error: string | null = null
 
@@ -68,7 +71,7 @@
       }
       const data = await response.json()
       sets = data.sets || []
-    } catch (err: any) {
+    } catch (err: Error | unknown) {
       console.error("Error loading sets:", err)
     }
   }
@@ -112,8 +115,11 @@
       cards = data.cards || []
       totalItems = data.totalItems || 0
       totalPages = Math.ceil(totalItems / pageSize)
-    } catch (err: any) {
-      error = err.message || "An error occurred while loading the data"
+    } catch (err: Error | unknown) {
+      error =
+        err instanceof Error
+          ? err.message
+          : "An error occurred while loading the data"
       console.error("Error loading cards:", err)
     } finally {
       loading = false
@@ -437,15 +443,19 @@
               >
               <td class="font-medium">{formatCurrency(card.market_price)}</td>
               <td
-                class:text-success={card.diff_market_price > 0}
-                class:text-error={card.diff_market_price < 0}
+                class:text-success={card.diff_market_price != null &&
+                  card.diff_market_price > 0}
+                class:text-error={card.diff_market_price != null &&
+                  card.diff_market_price < 0}
                 class="font-medium"
               >
                 {formatPercentage(card.diff_market_price)}
               </td>
               <td
-                class:text-success={card.dollar_diff_market_price > 0}
-                class:text-error={card.dollar_diff_market_price < 0}
+                class:text-success={card.dollar_diff_market_price != null &&
+                  card.dollar_diff_market_price > 0}
+                class:text-error={card.dollar_diff_market_price != null &&
+                  card.dollar_diff_market_price < 0}
                 class="font-medium"
               >
                 {formatDollarDiff(card.dollar_diff_market_price)}

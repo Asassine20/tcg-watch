@@ -242,6 +242,7 @@ export interface Database {
           prev_direct_low_price: number | null
           group_id: number | null
           set_name: string | null
+          sub_type_name: string | null
         }[]
       }
       upsert_price_history: {
@@ -268,12 +269,14 @@ export interface Database {
       update_product_prices: {
         Args: {
           p_id: number
+          p_product_id: number
           p_new_low_price: number | null
           p_new_mid_price: number | null
           p_new_high_price: number | null
           p_new_market_price: number | null
           p_new_direct_low_price: number | null
           p_prev_date: string // Date in 'YYYY-MM-DD' format
+          p_sub_type_name: string | null
         }
         Returns: boolean
       }

@@ -27,6 +27,10 @@ interface ProductData {
   type: string
 }
 
+interface ProductResponse extends ProductData {
+  id: number
+  extendedData?: ExtendedData[]
+}
 interface PriceData {
   productId: number
   lowPrice: number | null
@@ -250,7 +254,7 @@ async function fetchCombinedProductData(
     })
 
     // 4. Combine product and price data
-    return productsData.results.map((product: any) => {
+    return productsData.results.map((product: ProductResponse) => {
       const productId = product.productId || product.id
 
       let type = "sealed"
