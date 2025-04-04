@@ -9,12 +9,7 @@ import { createClient } from "@supabase/supabase-js"
 import type { Handle } from "@sveltejs/kit"
 import { sequence } from "@sveltejs/kit/hooks"
 
-console.log("PUBLIC_SUPABASE_URL:", PUBLIC_SUPABASE_URL)
-console.log("PUBLIC_SUPABASE_ANON_KEY:", PUBLIC_SUPABASE_ANON_KEY)
-console.log("PRIVATE_SUPABASE_SERVICE_ROLE:", PRIVATE_SUPABASE_SERVICE_ROLE)
-
 export const supabase: Handle = async ({ event, resolve }) => {
-  console.warn("Initializing Supabase client...")
   event.locals.supabase = createServerClient(
     PUBLIC_SUPABASE_URL,
     PUBLIC_SUPABASE_ANON_KEY,
