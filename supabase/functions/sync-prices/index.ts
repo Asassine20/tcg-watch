@@ -135,28 +135,28 @@ Deno.serve(async (req) => {
     }
 
     // Retrieve updated records for verification
-    const { data: updatedRecords, error: selectError } = await supabase
-      .from("price_history")
-      .select()
-      .in(
-        "product_id",
-        priceRecords.map((record) => record.product_id),
-      )
-      .in(
-        "sub_type_name",
-        priceRecords.map((record) => record.sub_type_name),
-      )
+    const productIds = priceRecords.map((record) => record.product_id)
+    const subTypeNames = priceRecords.map((record) => record.sub_type_name)
 
-    // TODO: Getting errors when trying to sync some groups
-    // EXAMPLE:
-    // [Info] Found 1780 products for group: 2282
-    // [Error] Error retrieving updated records: { message: "URI too long\n" }
-    // [Error] Unexpected error during price sync: { message: "URI too long\n" }
-    // [Error] Failed to sync prices for group 2282: { error: "Internal server error" }
+    const updatedRecords = []
+    const chunkSize = 50 // Adjust the chunk size as needed
 
-    if (selectError) {
-      console.error("Error retrieving updated records:", selectError)
-      throw selectError
+    for (let i = 0; i < productIds.length; i += chunkSize) {
+      const productIdsChunk = productIds.slice(i, i + chunkSize)
+      const subTypeNamesChunk = subTypeNames.slice(i, i + chunkSize)
+
+      const { data: recordsChunk, error: selectError } = await supabase
+        .from("price_history")
+        .select()
+        .in("product_id", productIdsChunk)
+        .in("sub_type_name", subTypeNamesChunk)
+
+      if (selectError) {
+        console.error("Error retrieving updated records:", selectError)
+        throw selectError
+      }
+
+      updatedRecords.push(...recordsChunk)
     }
 
     // Return the response
@@ -164,7 +164,6 @@ Deno.serve(async (req) => {
       JSON.stringify({
         success: true,
         message: `Successfully updated ${priceRecords.length} records`,
-        data: updatedRecords,
       }),
       {
         status: 200,
