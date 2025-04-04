@@ -147,6 +147,13 @@ Deno.serve(async (req) => {
         priceRecords.map((record) => record.sub_type_name),
       )
 
+    // TODO: Getting errors when trying to sync some groups
+    // EXAMPLE:
+    // [Info] Found 1780 products for group: 2282
+    // [Error] Error retrieving updated records: { message: "URI too long\n" }
+    // [Error] Unexpected error during price sync: { message: "URI too long\n" }
+    // [Error] Failed to sync prices for group 2282: { error: "Internal server error" }
+
     if (selectError) {
       console.error("Error retrieving updated records:", selectError)
       throw selectError

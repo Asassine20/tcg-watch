@@ -14,6 +14,7 @@ Deno.serve(async (req) => {
   }
 
   try {
+    const startTime = Date.now()
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_ANON_KEY") ?? "",
@@ -31,7 +32,7 @@ Deno.serve(async (req) => {
         "completed_at.is.null,completed_at.lt." +
           new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
       )
-      .limit(10)
+      .limit(50)
 
     if (error) {
       throw error
@@ -119,8 +120,11 @@ Deno.serve(async (req) => {
         console.log(`Job ${job.id} marked as completed.`)
       }
     }
-    // Return success response
-    console.log(`${data.length} jobs processed successfully.`)
+
+    const secondsLapsed = ((Date.now() - startTime) / 1000).toFixed(2)
+    console.info(
+      `Took ${secondsLapsed} seconds to process ${data.length} groups`,
+    )
     console.log(
       `Groups processed: ${data.map((job) => `${job.group_id}: ${job.name}`).join(", ")}`,
     )
