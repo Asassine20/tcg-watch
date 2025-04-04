@@ -65,8 +65,43 @@ Deno.serve(async (req) => {
         throw startProcessError
       }
 
-      // Simulate job processing (replace with actual logic)
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate async work
+      // Call the sync-prices function
+      const syncPricesUrl = new URL(
+        "/functions/v1/sync-prices",
+        Deno.env.get("SUPABASE_URL"),
+      ).toString() // Adjust the URL if needed
+      const syncPricesOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: req.headers.get("Authorization")!, // Forward the authorization header
+        },
+        body: JSON.stringify({
+          groupId: job.group_id,
+          group: job.group,
+          categoryId: job.category_id,
+          name: job.name,
+          abbreviation: job.abbreviation,
+        }), // Pass the group ID from the job
+      }
+
+      const syncPricesResponse = await fetch(syncPricesUrl, syncPricesOptions)
+
+      if (!syncPricesResponse.ok) {
+        const errorData = await syncPricesResponse.json()
+        console.error(
+          `Failed to sync prices for group ${job.group_id}:`,
+          errorData,
+        )
+        throw new Error(
+          `Failed to sync prices for group ${job.group_id}: ${syncPricesResponse.statusText}`,
+        )
+      } else {
+        const syncPricesData = await syncPricesResponse.json()
+        console.log(
+          `Successfully synced ${syncPricesData.lenght} prices for group ${job.group_id}:`,
+        )
+      }
 
       console.log(`Job ${job.id} processed successfully.`)
       // Update job status to completed
@@ -86,6 +121,9 @@ Deno.serve(async (req) => {
     }
     // Return success response
     console.log(`${data.length} jobs processed successfully.`)
+    console.log(
+      `Groups processed: ${data.map((job) => `${job.group_id}: ${job.name}`).join(", ")}`,
+    )
 
     return new Response(JSON.stringify({ data }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
