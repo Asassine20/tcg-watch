@@ -4,10 +4,11 @@ export const pricingPlans = [
   {
     id: "free",
     name: "Free",
-    description: "Get full access to market prices",
+    description: "Get access to market prices",
     price: "$0",
     priceIntervalName: "per month",
     stripe_price_id: null, // Replace with actual Stripe price ID
+    stripe_product_id: null,
     features: [
       "Access to all market prices",
     ],
@@ -18,8 +19,8 @@ export const pricingPlans = [
     description: "Get full access to market insights and pricing trends.",
     price: "$10",
     priceIntervalName: "per month",
-    stripe_price_id: "price_xxxxxxx", // Replace with actual Stripe price ID
-    stripe_product_id: "prod_xxxxxxx", // Replace with actual Stripe product ID
+    stripe_price_id: "price_1RABTYGHMelWwEfn0RXHOguu", // Replace with actual Stripe price ID
+    stripe_product_id: "prod_S4K7t1JmmK6zuk", // Replace with actual Stripe product ID
     features: [
       "Daily market updates",
       "Historical price trends",
